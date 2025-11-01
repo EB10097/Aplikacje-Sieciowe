@@ -8,10 +8,10 @@
 <body>
 
 <form action="<?php print(_APP_URL);?>/app/calc.php" method="post">
-	<label for="id_KwotaKredytu">Kwota Kredytu </label>
-	<input id="id_KwotaKredytu" type="text" name="KwotaKredytu" value="<?php isset($KwotaKredytu)?print($KwotaKredytu):print(""); ?>" /><br />
-	<label for="id_LataKredytu"> Lata kredytu: </label>
-	<select name="LataKredytu" id="id_LataKredytu">
+	<label for="id_kwotaKredytu">Kwota Kredytu </label>
+	<input id="id_kwotaKredytu" type="text" name="kwotaKredytu" value="<?php isset($kwotaKredytu)?print($kwotaKredytu):print(""); ?>" /><br />
+	<label for="id_lataKredytu"> Lata kredytu: </label>
+	<select name="lataKredytu" id="id_lataKredytu">
     <?php
     for ($i = 1; $i <= 30; $i++) {
         echo "<option value='$i'>$i</option>";
@@ -20,8 +20,8 @@
     ?> 	
 
 </select><br />
-	<label for="id_Oprocentowanie">Oprocentowanie </label>
-	<input id="id_Oprocentowanie" type="text" name="Oprocentowanie" value="<?php isset($Oprocentowanie)?print($Oprocentowanie):print(""); ?> " /><br />
+	<label for="id_oprocentowanie">Oprocentowanie </label>
+	<input id="id_oprocentowanie" type="text" name="oprocentowanie" value="<?php isset($oprocentowanie)?print($oprocentowanie):print(""); ?> " /><br />
 	<input type="submit" value="Oblicz" />
 </form>	
 

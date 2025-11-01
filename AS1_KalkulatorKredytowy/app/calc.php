@@ -8,43 +8,43 @@ require_once dirname(__FILE__).'/../config.php';
 
 // 1. pobranie parametrów
 
-$KwotaKredytu = $_REQUEST ['KwotaKredytu'];
-$LataKredytu = $_REQUEST ['LataKredytu'];
-$Oprocentowanie = $_REQUEST ['Oprocentowanie'];
+$kwotaKredytu = $_REQUEST ['kwotaKredytu'];
+$lataKredytu = $_REQUEST ['lataKredytu'];
+$oprocentowanie = $_REQUEST ['oprocentowanie'];
 
 // 2. walidacja parametrów z przygotowaniem zmiennych dla widoku
 
 // sprawdzenie, czy parametry zostały przekazane
-if ( ! (isset($KwotaKredytu) && isset($Oprocentowanie))) {
+if ( ! (isset($kwotaKredytu) && isset($oprocentowanie))) {
 	//sytuacja wystąpi kiedy np. kontroler zostanie wywołany bezpośrednio - nie z formularza
 	$messages [] = 'Błędne wywołanie aplikacji. Brak jednego z parametrów.';
 }
 
 // sprawdzenie, czy potrzebne wartości zostały przekazane
-if ( $KwotaKredytu == "") {
+if ( $kwotaKredytu == "") {
 	$messages [] = 'Nie podano Kwoty Kredytu';
 }
-if ( $Oprocentowanie == "") {
+if ( $oprocentowanie == "") {
 	$messages [] = 'Nie podano Oprocentowania';
 }
 
 //nie ma sensu walidować dalej gdy brak parametrów
 if (empty( $messages )) {
 	
-	if (! is_numeric( $Oprocentowanie )) {
+	if (! is_numeric( $oprocentowanie )) {
 		$messages [] = 'Oprocentowanie nie jest liczbą rzeczywistą!';
 	}
 	
 	// sprawdzenie, czy oprocentowaanie i kwota są liczbami całkowitymi !!!
-	if (! ctype_digit( $KwotaKredytu )) {
+	if (! ctype_digit( $kwotaKredytu )) {
 		$messages [] = 'Kwota Kredytu nie jest liczbą całkowitą';
 	}
 	
-	if ($KwotaKredytu < 0) {
+	if ($kwotaKredytu < 0) {
         $messages [] = 'Kwota kredytu nie może być ujemna!';
     }   
     
-    if ($Oprocentowanie < 0) {
+    if ($oprocentowanie < 0) {
         $messages [] = 'Oprocentowanie nie może być ujemne!';
     }	
 	
@@ -55,11 +55,12 @@ if (empty( $messages )) {
 if (empty ( $messages )) { // gdy brak błędów
 	
 	//konwersja parametrów na int
-	$KwotaKredytu = intval($KwotaKredytu);
-	$Oprocentowanie = floatval($Oprocentowanie);
+	$kwotaKredytu = intval($kwotaKredytu);
+	$lataKredytu = intval ($lataKredytu);
+	$oprocentowanie = floatval($oprocentowanie);
 	
 	//wykonanie operacji
-	$result = ($KwotaKredytu + ($KwotaKredytu * ($Oprocentowanie / 100) * $LataKredytu)) / (12 * $LataKredytu);
+	$result = ($kwotaKredytu + ($kwotaKredytu * ($oprocentowanie / 100) * $lataKredytu)) / (12 * $lataKredytu);
 	
 	$result = round($result, 2);
 }
