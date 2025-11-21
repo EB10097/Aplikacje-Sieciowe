@@ -26,15 +26,18 @@ function validate(&$form,&$infos,&$msgs,&$hide_intro){
 
 	// sprawdzenie, czy potrzebne wartości zostały przekazane
 	if ( $form['kwotaKredytu'] == "") $msgs [] = 'Nie podano Kwoty Kredytu';
-	if ( $form['lataKredytu'] == "") $msgs [] = 'Nie podano Oprocentowania';
+	if ( $form['oprocentowanie'] == "") $msgs [] = 'Nie podano Oprocentowania';
+	if ( $form['lataKredytu'] == "") $msgs [] = 'Nie podano Lat Kredytu';
 	
 	//nie ma sensu walidować dalej gdy brak parametrów
 	if ( count($msgs)==0 ) {
 		// sprawdzenie, czy $x i $y są liczbami całkowitymi
 		if (! is_numeric( $form['kwotaKredytu'] )) $msgs [] = 'Kwota Kredytu nie jest liczbą całkowitą';
 		if (! is_numeric( $form['oprocentowanie'] )) $msgs [] = 'Oprocentowanie nie jest liczbą rzeczywistą!';
+		if (! is_numeric( $form['lataKredytu'] )) $msgs [] = 'Lata Kredytu nie są liczbą całkowitą';
 		if ($form['kwotaKredytu'] < 0) $msgs [] = 'Kwota kredytu nie może być ujemna!';
 		if ($form['oprocentowanie'] < 0) $msgs [] = 'Oprocentowanie nie może być ujemne!';
+		if ($form['lataKredytu'] < 0) $msgs [] = 'Lata kredytu nie mogą być ujemne!';
 	}
 	
 	if (count($msgs)>0) return false;

@@ -20,7 +20,7 @@ function getParams(&$kwotaKredytu,&$lataKredytu,&$oprocentowanie){
 //walidacja parametrów z przygotowaniem zmiennych dla widoku
 function validate(&$kwotaKredytu,&$lataKredytu,&$oprocentowanie,&$messages){
     // sprawdzenie, czy parametry zostały przekazane
-    if ( ! (isset($kwotaKredytu) && isset($oprocentowanie))) {
+    if ( ! (isset($kwotaKredytu) && isset($oprocentowanie) && isset($lataKredytu))) {
         //sytuacja wystąpi kiedy np. kontroler zostanie wywołany bezpośrednio - nie z formularza
         $messages [] = 'Błędne wywołanie aplikacji. Brak jednego z parametrów.';
     }
@@ -31,6 +31,9 @@ function validate(&$kwotaKredytu,&$lataKredytu,&$oprocentowanie,&$messages){
     }
     if ( $oprocentowanie == "") {
         $messages [] = 'Nie podano Oprocentowania';
+    }
+    if ( $lataKredytu == "") {
+        $messages [] = 'Nie podano Lat Kredytu';
     }
 
     //nie ma sensu walidować dalej gdy brak parametrów
@@ -45,6 +48,10 @@ function validate(&$kwotaKredytu,&$lataKredytu,&$oprocentowanie,&$messages){
     if (! ctype_digit( $kwotaKredytu )) {
         $messages [] = 'Kwota Kredytu nie jest liczbą całkowitą';
     }
+
+    if (! ctype_digit( $lataKredytu )) {
+        $messages [] = 'Lata Kredytu nie są liczbą całkowitą';
+    }
     
     if ($kwotaKredytu < 0) {
         $messages [] = 'Kwota kredytu nie może być ujemna!';
@@ -53,6 +60,10 @@ function validate(&$kwotaKredytu,&$lataKredytu,&$oprocentowanie,&$messages){
     if ($oprocentowanie < 0) {
         $messages [] = 'Oprocentowanie nie może być ujemne!';
     }   
+
+    if ($lataKredytu < 0) {
+        $messages [] = 'Lata kredytu nie mogą być ujemne!';
+    }
 
     if (count ( $messages ) != 0) return false;
     else return true;

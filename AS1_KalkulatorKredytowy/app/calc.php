@@ -15,7 +15,7 @@ $oprocentowanie = $_REQUEST ['oprocentowanie'];
 // 2. walidacja parametrów z przygotowaniem zmiennych dla widoku
 
 // sprawdzenie, czy parametry zostały przekazane
-if ( ! (isset($kwotaKredytu) && isset($oprocentowanie))) {
+if ( ! (isset($kwotaKredytu) && isset($oprocentowanie) && isset($lataKredytu))) {
 	//sytuacja wystąpi kiedy np. kontroler zostanie wywołany bezpośrednio - nie z formularza
 	$messages [] = 'Błędne wywołanie aplikacji. Brak jednego z parametrów.';
 }
@@ -27,6 +27,10 @@ if ( $kwotaKredytu == "") {
 if ( $oprocentowanie == "") {
 	$messages [] = 'Nie podano Oprocentowania';
 }
+if ( $lataKredytu == "") {
+	$messages [] = 'Nie podano Lat Kredytu';
+}
+
 
 //nie ma sensu walidować dalej gdy brak parametrów
 if (empty( $messages )) {
@@ -40,12 +44,20 @@ if (empty( $messages )) {
 		$messages [] = 'Kwota Kredytu nie jest liczbą całkowitą';
 	}
 	
+	if (! ctype_digit( $lataKredytu )) {
+		$messages [] = 'Lata Kredytu nie jest liczbą całkowitą';
+	}
+
 	if ($kwotaKredytu < 0) {
         $messages [] = 'Kwota kredytu nie może być ujemna!';
     }   
     
     if ($oprocentowanie < 0) {
         $messages [] = 'Oprocentowanie nie może być ujemne!';
+    }	
+	
+	if ($lataKredytu < 0) {
+        $messages [] = 'Lata Kredytu nie może być ujemne!';
     }	
 	
 }
