@@ -1,0 +1,80 @@
+{extends file="main.tpl"}
+
+{block name=footer}{/block}
+
+{block name=content}
+
+<h2 class="content-head is-center"> 
+    <a href="{$conf->app_url}/index.php" class="btn" style="font-size: 12px; padding: 6px 16px; float: right; margin-top: 4px;">Powrót</a>
+</h2>
+
+<style>
+/* Lokalny styl dla kalkulatora: zielony i powiększony wynik */
+.result-box .res { color: #27ae60; font-weight: 700; font-size: 28px; }
+</style>
+
+<div class="row padding">
+    <div class="col span_8">
+        <div class="l-box">
+            <form action="{$app_url}/ctrl.php?action=calcCompute" method="post">
+                <fieldset>
+                    <label for="id_kwotaKredytu">Kwota kredytu</label>
+                    <input id="id_kwotaKredytu" type="text" placeholder="Kwota Kredytu" name="kwotaKredytu" value="{$form->kwotaKredytu}">
+
+                    <label for="id_lataKredytu">Lata kredytu</label>
+                    <select name="lataKredytu" id="id_lataKredytu">
+                        {for $i=1 to 30}
+                            
+                            <option value="{$i}"{if $form->lataKredytu == $i} selected{/if}>{$i}</option>
+                        {/for}
+                    </select>
+
+                    <label for="id_oprocentowanie">Oprocentowanie (%)</label>                    
+                    <input id="id_oprocentowanie" type="text" placeholder="Oprocentowanie" name="oprocentowanie" value="{$form->oprocentowanie}">
+
+                    <button type="submit" class="btn btn-large">Oblicz</button>
+
+                    
+                    {if isset($result->result)}
+                        <div class="result-box" style="margin-top:12px;">
+                            <h4>Miesięczna rata</h4>
+                            <p class="res">{$result->result} zł</p>
+                        </div>
+                    {/if}
+                </fieldset>
+            </form>
+        </div>
+    </div>
+
+    <div class="col span_16">
+        <div class="l-box">
+
+        {* ZMIANA: Obsługa błędów za pomocą obiektu Messages ($msgs) *}
+        {if $msgs->isError()}
+            <h4>Nastąpił Błąd</h4>
+            <ol class="err">
+            {foreach $msgs->getErrors() as $err}
+            {strip}
+                <li>{$err}</li>
+            {/strip}
+            {/foreach}
+            </ol>
+        {/if}
+
+        {* ZMIANA: Obsługa informacji za pomocą obiektu Messages ($msgs) *}
+        {if $msgs->isInfo()}
+            <h4>Informacje</h4>
+            <ol class="inf">
+            {foreach $msgs->getInfos() as $inf}
+            {strip}
+                <li>{$inf}</li>
+            {/strip}
+            {/foreach}
+            </ol>
+        {/if}
+
+        </div>
+    </div>
+</div>
+
+{/block}
